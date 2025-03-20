@@ -30,6 +30,10 @@
     </extensions>
 
     <actions>
+        <action id="switch_tab" class="com.miksuki.tabspliter.SwitchTab"
+        >
+            <keyboard-shortcut first-keystroke="ctrl 4"  keymap="$default"/>
+        </action>
         <action id="move_to_1" class="com.miksuki.tabspliter.MoveToFisrtTab"
             >
             <keyboard-shortcut first-keystroke="control 1"  keymap="$default"/>
