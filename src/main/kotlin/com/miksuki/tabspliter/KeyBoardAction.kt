@@ -5,18 +5,21 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 
 class MoveToFisrtTab: AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
+        TabManager.changeCurrentTab(0)
         println("move to tab-1")
     }
 }
 
 class MoveToSecondTab: AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
+        TabManager.changeCurrentTab(1)
         println("move to tab-2")
     }
 }
 
 class MoveToThirdTab: AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
+        TabManager.changeCurrentTab(2)
         println("move to tab-3")
     }
 }
