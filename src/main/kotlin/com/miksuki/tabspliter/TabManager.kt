@@ -10,7 +10,8 @@ object TabManager {
         this.fileEditorManagerEx = FileEditorManagerEx.getInstanceEx(project)
     }
 
-    fun selectTab(position: Int) {
-        fileEditorManagerEx.currentWindow = fileEditorManagerEx.windows[position]
+    fun selectTab(index: Int) {
+        if(fileEditorManagerEx.windows.size in 1..fileEditorManagerEx.windows.size)
+            fileEditorManagerEx.currentWindow = fileEditorManagerEx.windows[index]
     }
 }
