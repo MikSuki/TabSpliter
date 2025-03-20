@@ -10,7 +10,7 @@ object TabManager {
         this.fileEditorManagerEx = FileEditorManagerEx.getInstanceEx(project)
     }
 
-    fun changeCurrentTab(position: Int) {
+    fun selectTab(position: Int) {
         fileEditorManagerEx.currentWindow = fileEditorManagerEx.windows[position]
     }
 }
