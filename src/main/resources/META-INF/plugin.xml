@@ -29,6 +29,12 @@
         <editorFactoryListener implementation="com.miksuki.tabspliter.EditorListener"/>
     </extensions>
 
+    <projectListeners>
+        <listener class="com.miksuki.tabspliter.FileListener"
+                  topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"
+        />
+    </projectListeners>
+
     <actions>
         <action id="switch_tab" class="com.miksuki.tabspliter.SwitchTab"
         >

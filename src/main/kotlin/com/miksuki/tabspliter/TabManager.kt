@@ -2,12 +2,16 @@ package com.miksuki.tabspliter
 
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 
 object TabManager {
     private lateinit var fileEditorManagerEx: FileEditorManagerEx
     var currentPos = CyclicCounter(4)
 
+    var isInit = false
+
     fun init(project: Project) {
+        isInit = true
         this.fileEditorManagerEx = FileEditorManagerEx.getInstanceEx(project)
     }
 
@@ -18,15 +22,11 @@ object TabManager {
     }
 
     fun switchActiveTabFile() {
-        val fileList = fileEditorManagerEx.splitters.openFileList
+        val fileList = getActiveTabLastUsedList()
 
-        // TODO: need stpre last used time for files, it is not stored in intellij...
-        fileList.sortedByDescending { it.timeStamp }
-        fileList.get(0).modificationStamp
-
-
-        if(currentPos.get() == 3)
+        if (currentPos.get() == 3) {
             fileEditorManagerEx.openFile(fileList[currentPos.get()])
+        }
 
         fileList.mapIndexed { index, file ->
 
@@ -35,9 +35,16 @@ object TabManager {
             } else {
                 println("   $index ${file.name}")
             }
-
         }
 
         currentPos.add()
+    }
+
+    fun getActiveTabLastUsedList(): List<VirtualFile> {
+        val fileList = fileEditorManagerEx.splitters.openFileList
+        return fileList
+            .map { it to FileRecorder.getLastUsedTime(it) }
+            .sortedByDescending { it.second }
+            .map { it.first }
     }
 }
