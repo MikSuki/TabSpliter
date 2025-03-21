@@ -1,7 +1,9 @@
-package com.miksuki.tabspliter
+package com.miksuki.tabspliter.event
 
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
+import com.miksuki.tabspliter.FileRecorder
+import com.miksuki.tabspliter.TabManager
 
 class FileListener : FileEditorManagerListener {
     override fun selectionChanged(event: FileEditorManagerEvent) {
@@ -12,8 +14,7 @@ class FileListener : FileEditorManagerListener {
         }
 
         if(TabManager.isInit)
-            TabManager
-                .getActiveTabLastUsedList()
+            TabManager.getActiveTabLastUsedList()
                 .map { println(it) }
     }
 }

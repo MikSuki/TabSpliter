@@ -26,11 +26,10 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.miksuki.tabspliter.ProjectStartup"/>
-        <editorFactoryListener implementation="com.miksuki.tabspliter.EditorListener"/>
     </extensions>
 
     <projectListeners>
-        <listener class="com.miksuki.tabspliter.FileListener"
+        <listener class="com.miksuki.tabspliter.event.FileListener"
                   topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"
         />
     </projectListeners>
