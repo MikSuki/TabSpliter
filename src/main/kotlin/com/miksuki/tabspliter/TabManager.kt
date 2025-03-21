@@ -55,7 +55,7 @@ object TabManager {
     }
 
     fun getActiveTabLastUsedList(): List<VirtualFile> {
-        val fileList = fileEditorManagerEx.splitters.openFileList
+        val fileList = fileEditorManagerEx.splitters.currentWindow?.fileList ?: listOf()
         return fileList
             .map { it to FileRecorder.getLastUsedTime(it) }
             .sortedByDescending { it.second }
