@@ -3,6 +3,7 @@ package com.miksuki.tabspliter
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.miksuki.tabspliter.utils.CyclicCounter
 
 object TabManager {
     private lateinit var fileEditorManagerEx: FileEditorManagerEx

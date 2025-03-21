@@ -1,4 +1,4 @@
-package com.miksuki.tabspliter
+package com.miksuki.tabspliter.utils
 
 class CyclicCounter(maxSize: Int) {
     private val min = 0
