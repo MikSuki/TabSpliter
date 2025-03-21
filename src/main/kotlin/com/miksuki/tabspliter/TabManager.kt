@@ -6,13 +6,27 @@ import com.intellij.openapi.vfs.VirtualFile
 
 object TabManager {
     private lateinit var fileEditorManagerEx: FileEditorManagerEx
-    var currentPos = CyclicCounter(4)
+    private var switchingPos = CyclicCounter(0)
+    private var isSwitching = false
 
     var isInit = false
 
     fun init(project: Project) {
         isInit = true
         this.fileEditorManagerEx = FileEditorManagerEx.getInstanceEx(project)
+    }
+
+    private fun initSwitchingTab(size: Int) {
+        switchingPos = CyclicCounter(size)
+        isSwitching = true
+    }
+
+    fun finishSwitchingTab() {
+        if (!isSwitching) {
+            return
+        }
+        val fileList = getActiveTabLastUsedList()
+        fileEditorManagerEx.openFile(fileList[switchingPos.get()])
     }
 
     fun selectTab(index: Int) {
@@ -24,20 +38,20 @@ object TabManager {
     fun switchActiveTabFile() {
         val fileList = getActiveTabLastUsedList()
 
-        if (currentPos.get() == 3) {
-            fileEditorManagerEx.openFile(fileList[currentPos.get()])
+        if (!isSwitching) {
+            initSwitchingTab(fileList.size)
         }
 
-        fileList.mapIndexed { index, file ->
+        switchingPos.add()
 
-            if (currentPos.get() == index) {
+        fileList.mapIndexed { index, file ->
+            if (switchingPos.get() == index) {
                 println(" * $index ${file.name}")
             } else {
                 println("   $index ${file.name}")
             }
         }
 
-        currentPos.add()
     }
 
     fun getActiveTabLastUsedList(): List<VirtualFile> {
