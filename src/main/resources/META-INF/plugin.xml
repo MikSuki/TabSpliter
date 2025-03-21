@@ -36,19 +36,19 @@
     </projectListeners>
 
     <actions>
-        <action id="switch_tab" class="com.miksuki.tabspliter.SwitchTab"
+        <action id="switch_tab" class="com.miksuki.tabspliter.event.SwitchTab"
         >
             <keyboard-shortcut first-keystroke="ctrl 4"  keymap="$default"/>
         </action>
-        <action id="move_to_1" class="com.miksuki.tabspliter.MoveToFisrtTab"
+        <action id="move_to_1" class="com.miksuki.tabspliter.event.MoveToFisrtTab"
             >
             <keyboard-shortcut first-keystroke="control 1"  keymap="$default"/>
         </action>
-        <action id="move_to_2" class="com.miksuki.tabspliter.MoveToSecondTab"
+        <action id="move_to_2" class="com.miksuki.tabspliter.event.MoveToSecondTab"
         >
             <keyboard-shortcut first-keystroke="control 2"  keymap="$default"/>
         </action>
-        <action id="move_to_3" class="com.miksuki.tabspliter.MoveToThirdTab"
+        <action id="move_to_3" class="com.miksuki.tabspliter.event.MoveToThirdTab"
         >
             <keyboard-shortcut first-keystroke="control 3"  keymap="$default"/>
         </action>

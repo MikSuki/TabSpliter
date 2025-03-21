@@ -1,7 +1,8 @@
-package com.miksuki.tabspliter
+package com.miksuki.tabspliter.event
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.miksuki.tabspliter.TabManager
 
 class SwitchTab: AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
