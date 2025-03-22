@@ -51,5 +51,9 @@
         >
             <keyboard-shortcut first-keystroke="control 3"  keymap="$default"/>
         </action>
+        <action id="move_tab_right" class="com.miksuki.tabspliter.event.MoveFileRight"
+        >
+            <keyboard-shortcut first-keystroke="alt RIGHT"  keymap="$default"/>
+        </action>
     </actions>
 </idea-plugin>

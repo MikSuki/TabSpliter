@@ -5,6 +5,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
+import javax.swing.JSplitPane
 
 object TabManager {
     private lateinit var fileEditorManagerEx: FileEditorManagerEx
@@ -37,7 +38,11 @@ object TabManager {
 
     fun selectTab(index: Int) {
         if (fileEditorManagerEx.windows.size in 1..fileEditorManagerEx.windows.size) {
-            fileEditorManagerEx.currentWindow = fileEditorManagerEx.windows[index]
+            val sortedWindows =
+                fileEditorManagerEx.windows.clone().apply {
+                    sortBy { it.tabbedPane.component.location.x }
+                }
+            fileEditorManagerEx.currentWindow = sortedWindows[index]
         }
     }
 
@@ -59,14 +64,43 @@ object TabManager {
                 println("   $index ${file.name}")
             }
         }
-
     }
 
-    fun getActiveTabLastUsedList(): List<VirtualFile> {
+    private fun getActiveTabLastUsedList(): List<VirtualFile> {
         val fileList = fileEditorManagerEx.splitters.currentWindow?.fileList ?: listOf()
         return fileList
             .map { it to FileRecorder.getLastUsedTime(it) }
             .sortedByDescending { it.second }
             .map { it.first }
+    }
+
+    fun moveFileRight() {
+        val currentFile = fileEditorManagerEx.currentFile ?: return
+        val currentWindow = fileEditorManagerEx.currentWindow ?: return
+        val sortedWindows =
+            fileEditorManagerEx.windows.clone().apply {
+                sortBy { it.tabbedPane.component.location.x }
+            }
+        val posInWindows = sortedWindows.indexOf(currentWindow)
+        val isRightMost = posInWindows == sortedWindows.size - 1
+
+        when (true) {
+            isRightMost -> {
+                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move right*/ ) {
+                    fileEditorManagerEx.createSplitter(JSplitPane.HORIZONTAL_SPLIT, null)
+                    fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                }
+            }
+            else -> {
+                val targetPos = posInWindows + 1
+                val targetWindow = sortedWindows[targetPos]
+
+                fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                fileEditorManagerEx.openFile(
+                    currentFile,
+                    targetWindow,
+                )
+            }
+        }
     }
 }
