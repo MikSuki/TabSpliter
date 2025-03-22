@@ -38,10 +38,7 @@ object TabManager {
 
     fun selectTab(index: Int) {
         if (fileEditorManagerEx.windows.size in 1..fileEditorManagerEx.windows.size) {
-            val sortedWindows =
-                fileEditorManagerEx.windows.clone().apply {
-                    sortBy { it.tabbedPane.component.location.x }
-                }
+            val sortedWindows = getSortedWindows()
             fileEditorManagerEx.currentWindow = sortedWindows[index]
         }
     }
@@ -74,13 +71,15 @@ object TabManager {
             .map { it.first }
     }
 
+    private fun getSortedWindows() =
+        fileEditorManagerEx.windows.clone().apply {
+            sortBy { it.tabbedPane.component.location.x }
+        }
+
     fun moveFileRight() {
         val currentFile = fileEditorManagerEx.currentFile ?: return
         val currentWindow = fileEditorManagerEx.currentWindow ?: return
-        val sortedWindows =
-            fileEditorManagerEx.windows.clone().apply {
-                sortBy { it.tabbedPane.component.location.x }
-            }
+        val sortedWindows = getSortedWindows()
         val posInWindows = sortedWindows.indexOf(currentWindow)
         val isRightMost = posInWindows == sortedWindows.size - 1
 
