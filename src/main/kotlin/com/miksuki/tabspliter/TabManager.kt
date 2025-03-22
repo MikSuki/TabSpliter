@@ -3,6 +3,7 @@ package com.miksuki.tabspliter
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
 
 object TabManager {
@@ -20,6 +21,7 @@ object TabManager {
     private fun initSwitchingTab(size: Int) {
         switchingPos = CyclicCounter(size)
         isSwitching = true
+        TabSwitcherPopup.show()
     }
 
     fun finishSwitchingTab() {
@@ -28,6 +30,7 @@ object TabManager {
         }
         val fileList = getActiveTabLastUsedList()
         fileEditorManagerEx.openFile(fileList[switchingPos.get()])
+        TabSwitcherPopup.close()
     }
 
     fun selectTab(index: Int) {
