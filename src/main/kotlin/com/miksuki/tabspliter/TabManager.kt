@@ -95,6 +95,8 @@ object TabManager {
                 val targetWindow = sortedWindows[targetPos]
 
                 fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                // TODO: add a file closed event to open file after file was closed
+                //       due to a bug where the target window cannot be focused because closeFile is async
                 fileEditorManagerEx.openFile(
                     currentFile,
                     targetWindow,
