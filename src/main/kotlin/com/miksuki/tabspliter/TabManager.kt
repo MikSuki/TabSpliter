@@ -19,9 +19,10 @@ object TabManager {
     }
 
     private fun initSwitchingTab(size: Int) {
+        val fileList = getActiveTabLastUsedList()
         switchingPos = CyclicCounter(size)
         isSwitching = true
-        TabSwitcherPopup.show()
+        TabSwitcherPopup.show(fileList.map { it.name })
     }
 
     fun finishSwitchingTab() {
@@ -31,6 +32,7 @@ object TabManager {
         val fileList = getActiveTabLastUsedList()
         fileEditorManagerEx.openFile(fileList[switchingPos.get()])
         TabSwitcherPopup.close()
+        isSwitching = false
     }
 
     fun selectTab(index: Int) {
@@ -47,6 +49,8 @@ object TabManager {
         }
 
         switchingPos.add()
+
+        TabSwitcherPopup.setSelectedItem(switchingPos.get())
 
         fileList.mapIndexed { index, file ->
             if (switchingPos.get() == index) {
