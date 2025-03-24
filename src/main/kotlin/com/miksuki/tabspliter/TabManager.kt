@@ -85,7 +85,7 @@ object TabManager {
 
         when (true) {
             isRightMost -> {
-                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move right*/ ) {
+                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/ ) {
                     fileEditorManagerEx.createSplitter(JSplitPane.HORIZONTAL_SPLIT, null)
                     fileEditorManagerEx.closeFile(currentFile, currentWindow)
                 }
@@ -103,5 +103,46 @@ object TabManager {
                 )
             }
         }
+    }
+
+    fun moveFileLeft(){
+        val currentFile = fileEditorManagerEx.currentFile ?: return
+        val currentWindow = fileEditorManagerEx.currentWindow ?: return
+        val sortedWindows = getSortedWindows()
+        val posInWindows = sortedWindows.indexOf(currentWindow)
+        val isLeftMost = posInWindows == 0
+
+        when (true) {
+            isLeftMost -> {
+                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/ ) {
+                    val leftTab = currentWindow
+                    val rightTab = currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, false) ?: throw Exception("move file left error :(")
+
+
+                    leftTab.fileList.map {
+                        if (it.url != currentFile.url) {
+                            fileEditorManagerEx.closeFile(it, leftTab)
+                            fileEditorManagerEx.openFile(
+                                it,
+                                rightTab,
+                            )
+                        }
+                    }
+
+                    fileEditorManagerEx.closeFile(currentFile, rightTab)
+                }
+            }
+            else -> {
+                val targetPos = posInWindows - 1
+                val targetWindow = sortedWindows[targetPos]
+
+                fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                fileEditorManagerEx.openFile(
+                    currentFile,
+                    targetWindow,
+                )
+            }
+        }
+
     }
 }

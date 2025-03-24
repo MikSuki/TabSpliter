@@ -39,3 +39,9 @@ class MoveFileRight : AnAction() {
     }
 }
 
+class MoveFileLeft : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.moveFileLeft()
+        println("move tab left")
+    }
+}
