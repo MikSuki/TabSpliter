@@ -105,7 +105,6 @@ object TabManager {
                             targetWindow.setAsCurrentWindow(true)
                             fileEditorManagerEx.openFile(currentFile,true)
                         }
-//                    }
                     targetWindow.setAsCurrentWindow(true)
                 }
                 tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
@@ -125,22 +124,10 @@ object TabManager {
         when (true) {
             isLeftMost -> {
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
-                    val leftTab = currentWindow
-                    val rightTab =
-                        currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, false)
-                            ?: throw Exception("move file left error :(")
+                    currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, false, false)
+                        ?: throw Exception("move file left error :(")
 
-                    leftTab.fileList.map {
-                        if (it.url != currentFile.url) {
-                            fileEditorManagerEx.closeFile(it, leftTab)
-                            fileEditorManagerEx.openFile(
-                                it,
-                                rightTab,
-                            )
-                        }
-                    }
-
-                    fileEditorManagerEx.closeFile(currentFile, rightTab)
+                    fileEditorManagerEx.closeFile(currentFile, currentWindow)
                 }
             }
             else -> {
