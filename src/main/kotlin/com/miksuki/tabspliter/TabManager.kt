@@ -128,6 +128,7 @@ object TabManager {
         when (true) {
             isLeftMost -> {
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
+                    // TODO: store the relation for each splitters
                     currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, true, false)
                         ?: throw Exception("move file left error :(")
                     fileEditorManagerEx.closeFile(currentFile, currentWindow)
