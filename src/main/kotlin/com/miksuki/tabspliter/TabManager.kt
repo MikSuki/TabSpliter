@@ -2,14 +2,12 @@ package com.miksuki.tabspliter
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
+import com.intellij.openapi.fileEditor.impl.EditorWindow
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.openapi.vfs.VirtualFileManager
 import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
 import javax.swing.JSplitPane
-import javax.swing.SwingUtilities
 
 object TabManager {
     private lateinit var fileEditorManagerEx: FileEditorManagerEx
@@ -76,10 +74,15 @@ object TabManager {
             .map { it.first }
     }
 
-    private fun getSortedWindows() =
-        fileEditorManagerEx.windows.clone().apply {
-            sortBy { it.tabbedPane.component.location.x }
-        }
+    private fun getSortedWindows(): Array<EditorWindow> =
+        fileEditorManagerEx.windows
+            .clone()
+            .apply {
+                sortBy { it.tabbedPane.component.location.x }
+            }.let {
+                println(it.joinToString { "${it.tabbedPane.component.location.x}, " })
+                it
+            }
 
     fun moveFileRight() {
         val currentFile = fileEditorManagerEx.currentFile ?: return
@@ -91,7 +94,8 @@ object TabManager {
         when (true) {
             isRightMost -> {
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
-                    fileEditorManagerEx.createSplitter(JSplitPane.HORIZONTAL_SPLIT, null)
+                    currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, true, true)
+                        ?: throw Exception("move file left error :(")
                     fileEditorManagerEx.closeFile(currentFile, currentWindow)
                 }
             }
@@ -101,10 +105,10 @@ object TabManager {
                 val filePath = currentFile.url
 
                 val focusTargetEditor: () -> Unit = {
-                        ApplicationManager.getApplication().invokeLater{
-                            targetWindow.setAsCurrentWindow(true)
-                            fileEditorManagerEx.openFile(currentFile,true)
-                        }
+                    ApplicationManager.getApplication().invokeLater {
+                        targetWindow.setAsCurrentWindow(true)
+                        fileEditorManagerEx.openFile(currentFile, true)
+                    }
                     targetWindow.setAsCurrentWindow(true)
                 }
                 tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
@@ -124,9 +128,8 @@ object TabManager {
         when (true) {
             isLeftMost -> {
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
-                    currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, false, false)
+                    currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, true, false)
                         ?: throw Exception("move file left error :(")
-
                     fileEditorManagerEx.closeFile(currentFile, currentWindow)
                 }
             }
@@ -134,9 +137,9 @@ object TabManager {
                 val targetPos = posInWindows - 1
                 val targetWindow = sortedWindows[targetPos]
                 val focusTargetEditor: () -> Unit = {
-                    ApplicationManager.getApplication().invokeLater{
+                    ApplicationManager.getApplication().invokeLater {
                         targetWindow.setAsCurrentWindow(true)
-                        fileEditorManagerEx.openFile(currentFile,true)
+                        fileEditorManagerEx.openFile(currentFile, true)
                     }
                 }
                 tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
