@@ -146,9 +146,6 @@ object TabManager {
             else -> {
                 val targetPos = posInWindows - 1
                 val targetWindow = sortedWindows[targetPos]
-
-                fileEditorManagerEx
-
                 val focusTargetEditor: () -> Unit = {
                     ApplicationManager.getApplication().invokeLater{
                         targetWindow.setAsCurrentWindow(true)
@@ -156,8 +153,6 @@ object TabManager {
                     }
                 }
                 tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
-                fileEditorManagerEx.closeFile(currentFile, currentWindow)
-
                 fileEditorManagerEx.closeFile(currentFile, currentWindow)
                 targetWindow.setAsCurrentWindow(true)
             }
