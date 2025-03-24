@@ -1,16 +1,21 @@
 package com.miksuki.tabspliter
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.VirtualFileManager
 import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
 import javax.swing.JSplitPane
+import javax.swing.SwingUtilities
 
 object TabManager {
     private lateinit var fileEditorManagerEx: FileEditorManagerEx
     private var switchingPos = CyclicCounter(0)
     private var isSwitching = false
+    private val tabNeedFocusAfterFileClosed: HashMap<String, () -> Unit> = HashMap()
 
     var isInit = false
 
@@ -85,7 +90,7 @@ object TabManager {
 
         when (true) {
             isRightMost -> {
-                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/ ) {
+                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
                     fileEditorManagerEx.createSplitter(JSplitPane.HORIZONTAL_SPLIT, null)
                     fileEditorManagerEx.closeFile(currentFile, currentWindow)
                 }
@@ -93,19 +98,24 @@ object TabManager {
             else -> {
                 val targetPos = posInWindows + 1
                 val targetWindow = sortedWindows[targetPos]
+                val filePath = currentFile.url
+
+                val focusTargetEditor: () -> Unit = {
+                        ApplicationManager.getApplication().invokeLater{
+                            targetWindow.setAsCurrentWindow(true)
+                            fileEditorManagerEx.openFile(currentFile,true)
+                        }
+//                    }
+                    targetWindow.setAsCurrentWindow(true)
+                }
+                tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
 
                 fileEditorManagerEx.closeFile(currentFile, currentWindow)
-                // TODO: add a file closed event to open file after file was closed
-                //       due to a bug where the target window cannot be focused because closeFile is async
-                fileEditorManagerEx.openFile(
-                    currentFile,
-                    targetWindow,
-                )
             }
         }
     }
 
-    fun moveFileLeft(){
+    fun moveFileLeft() {
         val currentFile = fileEditorManagerEx.currentFile ?: return
         val currentWindow = fileEditorManagerEx.currentWindow ?: return
         val sortedWindows = getSortedWindows()
@@ -114,10 +124,11 @@ object TabManager {
 
         when (true) {
             isLeftMost -> {
-                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/ ) {
+                if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
                     val leftTab = currentWindow
-                    val rightTab = currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, false) ?: throw Exception("move file left error :(")
-
+                    val rightTab =
+                        currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, false)
+                            ?: throw Exception("move file left error :(")
 
                     leftTab.fileList.map {
                         if (it.url != currentFile.url) {
@@ -136,13 +147,30 @@ object TabManager {
                 val targetPos = posInWindows - 1
                 val targetWindow = sortedWindows[targetPos]
 
+                fileEditorManagerEx
+
+                val focusTargetEditor: () -> Unit = {
+                    ApplicationManager.getApplication().invokeLater{
+                        targetWindow.setAsCurrentWindow(true)
+                        fileEditorManagerEx.openFile(currentFile,true)
+                    }
+                }
+                tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
                 fileEditorManagerEx.closeFile(currentFile, currentWindow)
-                fileEditorManagerEx.openFile(
-                    currentFile,
-                    targetWindow,
-                )
+
+                fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                targetWindow.setAsCurrentWindow(true)
             }
         }
+    }
 
+    fun focusTargetWindow(url: String) {
+        if (tabNeedFocusAfterFileClosed[url] != null) {
+            val focusTargetTab = tabNeedFocusAfterFileClosed[url]
+            if (focusTargetTab != null) {
+                focusTargetTab()
+            }
+            tabNeedFocusAfterFileClosed.remove(url)
+        }
     }
 }

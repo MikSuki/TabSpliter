@@ -1,7 +1,9 @@
 package com.miksuki.tabspliter.event
 
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
+import com.intellij.openapi.vfs.VirtualFile
 import com.miksuki.tabspliter.FileRecorder
 import com.miksuki.tabspliter.TabManager
 
@@ -12,9 +14,11 @@ class FileListener : FileEditorManagerListener {
         event.newFile?.let {
             FileRecorder.updateLastUsedTime(it, System.currentTimeMillis())
         }
+    }
 
-        if(TabManager.isInit)
-            TabManager.getActiveTabLastUsedList()
-                .map { println(it) }
+    override fun fileClosed(source: FileEditorManager, file: VirtualFile) {
+        super.fileClosed(source, file)
+
+        TabManager.focusTargetWindow(file.url)
     }
 }
