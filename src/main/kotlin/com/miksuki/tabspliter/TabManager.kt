@@ -1,6 +1,5 @@
 package com.miksuki.tabspliter
 
-import com.intellij.ide.actions.SwitcherVirtualFile
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.fileEditor.impl.EditorWindow
