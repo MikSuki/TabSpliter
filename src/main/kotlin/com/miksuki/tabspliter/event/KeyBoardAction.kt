@@ -11,6 +11,20 @@ class SwitchTab : AnAction() {
     }
 }
 
+class MoveFileRight : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.moveFileRight()
+        println("move tab right")
+    }
+}
+
+class MoveFileLeft : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.moveFileLeft()
+        println("move tab left")
+    }
+}
+
 class MoveToFisrtTab : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         TabManager.selectTab(0)
@@ -32,16 +46,39 @@ class MoveToThirdTab : AnAction() {
     }
 }
 
-class MoveFileRight : AnAction() {
+class MoveToFourthTab : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        TabManager.moveFileRight()
-        println("move tab right")
+        TabManager.selectTab(3)
+        println("move to tab-4")
     }
 }
-
-class MoveFileLeft : AnAction() {
+class MoveToFifthTab : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        TabManager.moveFileLeft()
-        println("move tab left")
+        TabManager.selectTab(4)
+        println("move to tab-5")
+    }
+}
+class MoveToSixthTab : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.selectTab(5)
+        println("move to tab-6")
+    }
+}
+class MoveToSeventhTab : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.selectTab(6)
+        println("move to tab-7")
+    }
+}
+class MoveToEighthTab : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.selectTab(7)
+        println("move to tab-8")
+    }
+}
+class MoveToNinthTab : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.selectTab(8)
+        println("move to tab-9")
     }
 }
