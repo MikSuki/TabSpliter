@@ -1,5 +1,6 @@
 package com.miksuki.tabspliter
 
+import com.intellij.ide.actions.SwitcherVirtualFile
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.fileEditor.impl.EditorWindow
@@ -7,7 +8,9 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
+import java.awt.Point
 import javax.swing.JSplitPane
+import javax.swing.SwingUtilities
 
 object TabManager {
     private lateinit var fileEditorManagerEx: FileEditorManagerEx
@@ -74,15 +77,15 @@ object TabManager {
             .map { it.first }
     }
 
-    private fun getSortedWindows(): Array<EditorWindow> =
+    private fun getSortedWindows(): List<EditorWindow> =
         fileEditorManagerEx.windows
-            .clone()
-            .apply {
-                sortBy { it.tabbedPane.component.location.x }
-            }.let {
-                println(it.joinToString { "${it.tabbedPane.component.location.x}, " })
-                it
+            .map {
+                val location = Point(0, 0)
+                SwingUtilities.convertPointToScreen(location, it.tabbedPane.component)
+                location to it
             }
+            .sortedBy { it.first.x }
+            .map {it.second}
 
     fun moveFileRight() {
         val currentFile = fileEditorManagerEx.currentFile ?: return
@@ -128,7 +131,6 @@ object TabManager {
         when (true) {
             isLeftMost -> {
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
-                    // TODO: store the relation for each splitters
                     currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, true, false)
                         ?: throw Exception("move file left error :(")
                     fileEditorManagerEx.closeFile(currentFile, currentWindow)
