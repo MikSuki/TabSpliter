@@ -1,5 +1,7 @@
 package com.miksuki.tabspliter
 
+import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.fileEditor.impl.EditorWindow
@@ -160,5 +162,11 @@ object TabManager {
             }
             tabNeedFocusAfterFileClosed.remove(url)
         }
+    }
+
+    fun toggleCurrentTabSize(e: AnActionEvent) {
+        val actionManager = ActionManager.getInstance()
+        val action = actionManager.getAction("MaximizeEditorInSplit")
+        action.actionPerformed(e)
     }
 }

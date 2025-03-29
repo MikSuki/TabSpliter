@@ -83,5 +83,9 @@
         >
             <keyboard-shortcut first-keystroke="control 9"  keymap="$default"/>
         </action>
+        <action id="toggle_current_tab_size" class="com.miksuki.tabspliter.event.ToggleCurrentTabSize"
+        >
+            <keyboard-shortcut first-keystroke="alt t"  keymap="$default"/>
+        </action>
     </actions>
 </idea-plugin>
