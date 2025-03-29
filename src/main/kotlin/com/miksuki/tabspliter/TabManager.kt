@@ -37,7 +37,9 @@ object TabManager {
             return
         }
         val fileList = getActiveTabLastUsedList()
+        val currentWindow = fileEditorManagerEx.currentWindow
         fileEditorManagerEx.openFile(fileList[switchingPos.get()])
+        fileEditorManagerEx.currentWindow = currentWindow
         TabSwitcherPopup.close()
         isSwitching = false
     }
@@ -83,9 +85,8 @@ object TabManager {
                 val location = Point(0, 0)
                 SwingUtilities.convertPointToScreen(location, it.tabbedPane.component)
                 location to it
-            }
-            .sortedBy { it.first.x }
-            .map {it.second}
+            }.sortedBy { it.first.x }
+            .map { it.second }
 
     fun moveFileRight() {
         val currentFile = fileEditorManagerEx.currentFile ?: return
