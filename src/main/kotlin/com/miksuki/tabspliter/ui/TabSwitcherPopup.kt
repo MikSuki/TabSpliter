@@ -23,6 +23,7 @@ object TabSwitcherPopup {
     private var panelHeight: Int = 300
     private var panelPosX: Int = 0
     private var panelPosY: Int = 0
+    private var panelPadding: Int = 0
     private lateinit var list: JBList<String>
 
     private fun createPopup(fileNames: List<String>): JBPopup {
@@ -46,6 +47,7 @@ object TabSwitcherPopup {
         val scrollPane =
             JBScrollPane(list).apply {
                 preferredSize.width = panelWidth
+                border = JBUI.Borders.empty(0, panelPadding)
             }
 
         val titlePanel =
@@ -85,6 +87,7 @@ object TabSwitcherPopup {
         panelHeight = (screenSize.height * 0.3).toInt()
         panelPosX = (screenSize.width - panelWidth) / 2
         panelPosY = 0
+        panelPadding = (panelWidth * 0.05).toInt()
 
         popup = createPopup(fileNames)
         popup.show(RelativePoint(Point(panelPosX, panelPosY)))
