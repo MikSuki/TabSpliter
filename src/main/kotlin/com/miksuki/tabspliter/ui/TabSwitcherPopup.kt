@@ -6,6 +6,7 @@ import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.JBColor
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.ui.components.JBList
+import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.JBUI
 import java.awt.BorderLayout
 import java.awt.Point
@@ -14,6 +15,7 @@ import javax.swing.BorderFactory
 import javax.swing.DefaultListModel
 import javax.swing.JButton
 import javax.swing.JPanel
+import javax.swing.ListSelectionModel
 
 object TabSwitcherPopup {
     private lateinit var popup: JBPopup
@@ -34,7 +36,17 @@ object TabSwitcherPopup {
 
         val listModel = DefaultListModel<String>()
 
-        list = JBList(listModel)
+        listModel.addAll(fileNames)
+        list =
+            JBList(listModel).apply {
+                preferredSize.width = panelWidth
+                selectionMode = ListSelectionModel.SINGLE_SELECTION
+            }
+
+        val scrollPane =
+            JBScrollPane(list).apply {
+                preferredSize.width = panelWidth
+            }
 
         val titlePanel =
             JPanel(BorderLayout()).apply {
@@ -48,9 +60,10 @@ object TabSwitcherPopup {
                 preferredSize = JBUI.size(panelWidth, panelHeight)
                 background = JBColor.WHITE
                 border = BorderFactory.createLineBorder(JBColor.GRAY)
+                layout = BorderLayout()
 
-                add(titlePanel)
-                add(list)
+                add(titlePanel, BorderLayout.NORTH)
+                add(scrollPane, BorderLayout.CENTER)
             }
 
         val popup =
@@ -58,7 +71,6 @@ object TabSwitcherPopup {
                 .getInstance()
                 .createComponentPopupBuilder(panel, null)
                 .createPopup()
-        listModel.addAll(fileNames)
 
         return popup
     }
