@@ -17,9 +17,13 @@ import javax.swing.JPanel
 
 object TabSwitcherPopup {
     private lateinit var popup: JBPopup
+    private var panelWidth: Int = 500
+    private var panelHeight: Int = 300
+    private var panelPosX: Int = 0
+    private var panelPosY: Int = 0
     private lateinit var list: JBList<String>
 
-    fun createPopup(fileNames: List<String>): JBPopup {
+    private fun createPopup(fileNames: List<String>): JBPopup {
         val closeButton =
             JButton(AllIcons.Actions.Close).apply {
                 isContentAreaFilled = false
@@ -34,14 +38,14 @@ object TabSwitcherPopup {
 
         val titlePanel =
             JPanel(BorderLayout()).apply {
-                preferredSize = JBUI.size(300, 30)
+                preferredSize = JBUI.size(panelWidth, 30)
                 background = JBColor.LIGHT_GRAY
                 add(closeButton, BorderLayout.EAST)
             }
 
         val panel =
             JPanel().apply {
-                preferredSize = JBUI.size(300, 200)
+                preferredSize = JBUI.size(panelWidth, panelHeight)
                 background = JBColor.WHITE
                 border = BorderFactory.createLineBorder(JBColor.GRAY)
 
@@ -59,18 +63,19 @@ object TabSwitcherPopup {
         return popup
     }
 
-    fun setSelectedItem(index: Int){
+    fun setSelectedItem(index: Int) {
         list.selectedIndex = index
     }
 
-
     fun show(fileNames: List<String>) {
-         popup = createPopup(fileNames)
-//        val screenSize = Toolkit.getDefaultToolkit().screenSize
-//        val x = (screenSize.width - panel.getPreferredSize().width) / 2
-//        val y = (screenSize.height - panel.getPreferredSize().height) / 4
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        panelWidth = (screenSize.width * 0.5).toInt()
+        panelHeight = (screenSize.height * 0.3).toInt()
+        panelPosX = (screenSize.width - panelWidth) / 2
+        panelPosY = 0
 
-        popup.show(RelativePoint(Point(500, 500)))
+        popup = createPopup(fileNames)
+        popup.show(RelativePoint(Point(panelPosX, panelPosY)))
     }
 
     fun close() {
