@@ -3,11 +3,19 @@ package com.miksuki.tabspliter.event
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.miksuki.tabspliter.TabManager
+import com.miksuki.tabspliter.type.Direction
 
-class SwitchTab : AnAction() {
+class SwitchTabNext : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        TabManager.switchActiveTabFile()
-        println("switch tab")
+        TabManager.switchActiveTabFile(Direction.NEXT)
+        println("switch tab next")
+    }
+}
+
+class SwitchTabPrevios : AnAction() {
+    override fun actionPerformed(e: AnActionEvent) {
+        TabManager.switchActiveTabFile(Direction.PREVIOUS)
+        println("switch tab previous")
     }
 }
 

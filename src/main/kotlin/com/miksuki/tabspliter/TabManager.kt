@@ -7,6 +7,7 @@ import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.fileEditor.impl.EditorWindow
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.miksuki.tabspliter.type.Direction
 import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
 import java.awt.Point
@@ -52,14 +53,17 @@ object TabManager {
         }
     }
 
-    fun switchActiveTabFile() {
+    fun switchActiveTabFile(direction: Direction) {
         val fileList = getActiveTabLastUsedList()
 
         if (!isSwitching) {
             initSwitchingTab(fileList.size)
         }
 
-        switchingPos.add()
+        when(direction){
+            Direction.NEXT -> switchingPos.add()
+            Direction.PREVIOUS -> switchingPos.sub()
+        }
 
         TabSwitcherPopup.setSelectedItem(switchingPos.get())
 
