@@ -53,14 +53,20 @@ object TabManager {
         }
     }
 
-    fun switchActiveTabFile(direction: Direction) {
+    fun switchActiveTabFile(
+        direction: Direction,
+        canInitSwitcher: Boolean,
+    ) {
         val fileList = getActiveTabLastUsedList()
 
         if (!isSwitching) {
+            if (!canInitSwitcher) {
+                return
+            }
             initSwitchingTab(fileList.size)
         }
 
-        when(direction){
+        when (direction) {
             Direction.NEXT -> switchingPos.add()
             Direction.PREVIOUS -> switchingPos.sub()
         }

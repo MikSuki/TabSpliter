@@ -35,13 +35,21 @@
     </projectListeners>
 
     <actions>
-        <action id="switch_tab_next" class="com.miksuki.tabspliter.event.SwitchTabNext"
+        <action id="prepare_and_switch_tab_next" class="com.miksuki.tabspliter.event.PrepareAndSwitchTabNext"
         >
             <keyboard-shortcut first-keystroke="ctrl TAB"  keymap="$default"/>
         </action>
-        <action id="switch_tab_previous" class="com.miksuki.tabspliter.event.SwitchTabPrevios"
+        <action id="prepare_and_switch_tab_previous" class="com.miksuki.tabspliter.event.PrepareAndSwitchTabPrevious"
         >
             <keyboard-shortcut first-keystroke="ctrl shift TAB"  keymap="$default"/>
+        </action>
+        <action id="switch_tab_next" class="com.miksuki.tabspliter.event.SwitchTabPrevios"
+        >
+            <keyboard-shortcut first-keystroke="ctrl UP"  keymap="$default"/>
+        </action>
+        <action id="switch_tab_previous" class="com.miksuki.tabspliter.event.SwitchTabNext"
+        >
+            <keyboard-shortcut first-keystroke="ctrl DOWN"  keymap="$default"/>
         </action>
         <action id="move_tab_right" class="com.miksuki.tabspliter.event.MoveFileRight"
         >
