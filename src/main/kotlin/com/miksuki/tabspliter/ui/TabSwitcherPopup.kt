@@ -11,11 +11,7 @@ import com.intellij.util.ui.JBUI
 import java.awt.BorderLayout
 import java.awt.Point
 import java.awt.Toolkit
-import javax.swing.BorderFactory
-import javax.swing.DefaultListModel
-import javax.swing.JButton
-import javax.swing.JPanel
-import javax.swing.ListSelectionModel
+import javax.swing.*
 
 object TabSwitcherPopup {
     private lateinit var popup: JBPopup
@@ -42,6 +38,15 @@ object TabSwitcherPopup {
             JBList(listModel).apply {
                 preferredSize.width = panelWidth
                 selectionMode = ListSelectionModel.SINGLE_SELECTION
+                font = font.deriveFont(20f)
+                fixedCellHeight = 40
+                border =
+                    BorderFactory.createEmptyBorder(
+                        (panelHeight * 0.05).toInt(),
+                        (panelWidth * 0.1).toInt(),
+                        (panelHeight * 0.05).toInt(),
+                        (panelWidth * 0.1).toInt(),
+                    )
             }
 
         val scrollPane =
@@ -61,7 +66,7 @@ object TabSwitcherPopup {
             JPanel().apply {
                 preferredSize = JBUI.size(panelWidth, panelHeight)
                 background = JBColor.WHITE
-                border = BorderFactory.createLineBorder(JBColor.GRAY)
+                border = BorderFactory.createLineBorder(JBColor.GRAY, 1, true)
                 layout = BorderLayout()
 
                 add(titlePanel, BorderLayout.NORTH)
@@ -79,11 +84,12 @@ object TabSwitcherPopup {
 
     fun setSelectedItem(index: Int) {
         list.selectedIndex = index
+        list.scrollRectToVisible(list.getCellBounds(index, index))
     }
 
     fun show(fileNames: List<String>) {
         val screenSize = Toolkit.getDefaultToolkit().screenSize
-        panelWidth = (screenSize.width * 0.5).toInt()
+        panelWidth = (screenSize.width * 0.3).toInt()
         panelHeight = (screenSize.height * 0.3).toInt()
         panelPosX = (screenSize.width - panelWidth) / 2
         panelPosY = 0
