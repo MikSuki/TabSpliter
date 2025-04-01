@@ -30,7 +30,7 @@ object TabManager {
         val fileList = getActiveTabLastUsedList()
         switchingPos = CyclicCounter(size)
         isSwitching = true
-        TabSwitcherPopup.show(fileList.map { it.name })
+        TabSwitcherPopup.show(fileList)
     }
 
     fun finishSwitchingTab() {
