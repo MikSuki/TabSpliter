@@ -68,6 +68,7 @@ object TabManager {
             val needMaximize =
                 sortedWindows
                     .map { it.tabbedPane.component.width }
+                    // it can be enhanced, if we can get the value of "MaximizeEditorInSplit" from intellij
                     .any { it > screenWith / 2 }
 
             if(needMaximize)
