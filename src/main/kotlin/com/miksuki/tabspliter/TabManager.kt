@@ -34,6 +34,15 @@ object TabManager {
         TabSwitcherPopup.show(fileList)
     }
 
+    fun stopSwitchingTab() {
+        if(!isSwitching){
+            return
+        }
+
+        TabSwitcherPopup.close()
+        isSwitching = false
+    }
+
     fun finishSwitchingTab() {
         if (!isSwitching) {
             return
