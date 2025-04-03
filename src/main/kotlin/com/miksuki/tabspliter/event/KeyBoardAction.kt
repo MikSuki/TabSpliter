@@ -107,7 +107,7 @@ class MoveToNinthTab : AnAction() {
 
 class ToggleCurrentTabSize : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        TabManager.toggleCurrentTabSize(e)
+        TabManager.toggleCurrentTabSize()
         println("maximum tab")
     }
 }

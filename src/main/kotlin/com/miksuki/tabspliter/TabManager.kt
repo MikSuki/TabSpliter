@@ -1,7 +1,6 @@
 package com.miksuki.tabspliter
 
 import com.intellij.openapi.actionSystem.ActionManager
-import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.fileEditor.impl.EditorWindow
@@ -11,6 +10,7 @@ import com.miksuki.tabspliter.type.Direction
 import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
 import java.awt.Point
+import java.awt.Toolkit
 import javax.swing.JSplitPane
 import javax.swing.SwingUtilities
 
@@ -35,7 +35,7 @@ object TabManager {
     }
 
     fun stopSwitchingTab() {
-        if(!isSwitching){
+        if (!isSwitching) {
             return
         }
 
@@ -59,7 +59,16 @@ object TabManager {
     fun selectTab(index: Int) {
         if (fileEditorManagerEx.windows.size in 1..fileEditorManagerEx.windows.size) {
             val sortedWindows = getSortedWindows()
-            fileEditorManagerEx.currentWindow = sortedWindows[index]
+            val targetWindow = sortedWindows[index]
+            targetWindow.setAsCurrentWindow(true)
+            val screenWith = Toolkit.getDefaultToolkit().screenSize.width
+            val needMaximize =
+                sortedWindows
+                    .map { it.tabbedPane.component.width }
+                    .any { it > screenWith / 2 }
+
+            if(needMaximize)
+                toggleCurrentTabSize()
         }
     }
 
@@ -184,7 +193,7 @@ object TabManager {
         }
     }
 
-    fun toggleCurrentTabSize(e: AnActionEvent) {
+    fun toggleCurrentTabSize() {
         val actionManager = ActionManager.getInstance()
         val action = actionManager.getAction("MaximizeEditorInSplit")
         actionManager.tryToExecute(
@@ -192,7 +201,7 @@ object TabManager {
             null,
             null,
             null,
-            true,
+            false,
         )
     }
 }
