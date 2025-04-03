@@ -60,6 +60,9 @@ object TabManager {
         if (fileEditorManagerEx.windows.size in 1..fileEditorManagerEx.windows.size) {
             val sortedWindows = getSortedWindows()
             val targetWindow = sortedWindows[index]
+            if(fileEditorManagerEx.currentWindow == targetWindow){
+                return
+            }
             targetWindow.setAsCurrentWindow(true)
             val screenWith = Toolkit.getDefaultToolkit().screenSize.width
             val needMaximize =
