@@ -1,5 +1,6 @@
 package com.miksuki.tabspliter.ui
 
+import ai.grazie.text.substring
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.ui.popup.JBPopup
 import com.intellij.openapi.ui.popup.JBPopupFactory
@@ -10,6 +11,7 @@ import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.JBUI
 import com.miksuki.tabspliter.TabManager
+import com.miksuki.tabspliter.utils.Utils
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Point
@@ -65,7 +67,29 @@ object TabSwitcherPopup {
 
         val listModel = DefaultListModel<ListItem>()
 
-        listModel.addAll(files.map { ListItem(it.fileType.icon, it.name) })
+        val filesNeedShowPath =
+            files
+                .groupBy { it.name }
+                .filter { it.value.size > 1 }
+                .map { it.key }
+                .toSet()
+
+        listModel.addAll(
+            files.map {
+                ListItem(
+                    it.fileType.icon,
+                    if (filesNeedShowPath.contains(it.name)) {
+                        it.url.let { url ->
+                            val projectUrl = Utils.getProjectPath() ?: url
+                            val index = url.indexOf(projectUrl)
+                            url.substring(index + projectUrl.length)
+                        }
+                    } else {
+                        it.name
+                    },
+                )
+            },
+        )
         list =
             JBList(listModel).apply {
                 preferredSize.width = panelWidth
