@@ -152,10 +152,10 @@ object TabSwitcherPopup {
     }
 
     fun show(files: List<VirtualFile>) {
-        val screenSize = Toolkit.getDefaultToolkit().screenSize
-        panelWidth = (screenSize.width * 0.3).toInt()
-        panelHeight = (screenSize.height * 0.3).toInt()
-        panelPosX = (screenSize.width - panelWidth) / 2
+        val appSize = Utils.getAppSize()
+        panelWidth = (appSize.width * 0.3).toInt()
+        panelHeight = (appSize.height * 0.3).toInt()
+        panelPosX = (appSize.width - panelWidth) / 2
         panelPosY = 0
         panelPadding = (panelWidth * 0.05).toInt()
 

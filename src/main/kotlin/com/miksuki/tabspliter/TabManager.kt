@@ -9,8 +9,8 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.miksuki.tabspliter.type.Direction
 import com.miksuki.tabspliter.ui.TabSwitcherPopup
 import com.miksuki.tabspliter.utils.CyclicCounter
+import com.miksuki.tabspliter.utils.Utils
 import java.awt.Point
-import java.awt.Toolkit
 import javax.swing.JSplitPane
 import javax.swing.SwingUtilities
 
@@ -60,19 +60,20 @@ object TabManager {
         if (fileEditorManagerEx.windows.size in 1..fileEditorManagerEx.windows.size) {
             val sortedWindows = getSortedWindows()
             val targetWindow = sortedWindows[index]
-            if(fileEditorManagerEx.currentWindow == targetWindow){
+            if (fileEditorManagerEx.currentWindow == targetWindow) {
                 return
             }
             targetWindow.setAsCurrentWindow(true)
-            val screenWith = Toolkit.getDefaultToolkit().screenSize.width
+            val appWidth = Utils.getAppSize().width
             val needMaximize =
                 sortedWindows
                     .map { it.tabbedPane.component.width }
                     // it can be enhanced, if we can get the value of "MaximizeEditorInSplit" from intellij
-                    .any { it > screenWith / 2 }
+                    .any { it > appWidth / 2 }
 
-            if(needMaximize)
+            if (needMaximize) {
                 toggleCurrentTabSize()
+            }
         }
     }
 
