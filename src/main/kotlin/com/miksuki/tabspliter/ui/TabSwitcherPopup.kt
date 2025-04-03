@@ -9,10 +9,13 @@ import com.intellij.ui.awt.RelativePoint
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.JBUI
+import com.miksuki.tabspliter.TabManager
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Point
 import java.awt.Toolkit
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import javax.swing.*
 
 object TabSwitcherPopup {
@@ -70,6 +73,20 @@ object TabSwitcherPopup {
                 font = font.deriveFont(20f)
                 fixedCellHeight = 40
                 cellRenderer = CellListRenderer()
+                addMouseListener(
+                    object : MouseAdapter() {
+                        override fun mouseClicked(e: MouseEvent) {
+                            val index = list.locationToIndex(e.point)
+                            if (index >= 0) {
+                                TabManager.finishSwitchingTab(index)
+                            }
+                        }
+
+                        override fun mouseEntered(e: MouseEvent) { }
+
+                        override fun mouseExited(e: MouseEvent) { }
+                    },
+                )
             }
 
         val scrollPane =

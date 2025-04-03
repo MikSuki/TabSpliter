@@ -43,13 +43,14 @@ object TabManager {
         isSwitching = false
     }
 
-    fun finishSwitchingTab() {
+    fun finishSwitchingTab(index: Int? = null) {
         if (!isSwitching) {
             return
         }
+        val pos = index ?: switchingPos.get()
         val fileList = getActiveTabLastUsedList()
         val currentWindow = fileEditorManagerEx.currentWindow
-        fileEditorManagerEx.openFile(fileList[switchingPos.get()])
+        fileEditorManagerEx.openFile(fileList[pos])
         fileEditorManagerEx.currentWindow = currentWindow
         TabSwitcherPopup.close()
         isSwitching = false
