@@ -187,6 +187,12 @@ object TabManager {
     fun toggleCurrentTabSize(e: AnActionEvent) {
         val actionManager = ActionManager.getInstance()
         val action = actionManager.getAction("MaximizeEditorInSplit")
-        action.actionPerformed(e)
+        actionManager.tryToExecute(
+            action,
+            null,
+            null,
+            null,
+            true,
+        )
     }
 }
