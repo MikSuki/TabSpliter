@@ -19,8 +19,8 @@ While there are already several extensions that offer this feature, I found some
 
 | Action                                  | Shortcut           |
 |-----------------------------------------|--------------------|
-| Move File Left                          | Alt + Left         |
-| Move File Right                         | Alt + Right        |
+| Move file left                          | Alt + Left         |
+| Move file right                         | Alt + Right        |
 | Switch to next file                     | Ctrl + Tab         |
 | Switch to previous file                 | Ctrl + Shift + Tab |
 | Switch to next file(when switching)     | Ctrl + Down        |
