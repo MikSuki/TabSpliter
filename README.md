@@ -30,7 +30,7 @@ While there are already several extensions that offer this feature, I found some
 | Select Tab 2                            | Ctrl + 2           |
 | Select Tab 3                            | Ctrl + 3           |
 | Select Tab 4                            | Ctrl + 4           |
-| Select Tab 1                            | Ctrl + 5           |
+| Select Tab 5                            | Ctrl + 5           |
 | Select Tab 6                            | Ctrl + 6           |
 | Select Tab 7                            | Ctrl + 7           |
 | Select Tab 8                            | Ctrl + 8           |
