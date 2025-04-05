@@ -1,7 +1,7 @@
 # TabSplitter
 
 <!-- Plugin description -->
-## What's HighlightCursor?
+## What's TabSplitter?
 
 This is an IntelliJ extension that allows you to horizontally split the editor.
 
