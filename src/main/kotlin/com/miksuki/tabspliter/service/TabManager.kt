@@ -100,14 +100,6 @@ object TabManager {
         }
 
         TabSwitcherPopup.setSelectedItem(switchingPos.get())
-
-        fileList.mapIndexed { index, file ->
-            if (switchingPos.get() == index) {
-                println(" * $index ${file.name}")
-            } else {
-                println("   $index ${file.name}")
-            }
-        }
     }
 
     private fun getActiveTabLastUsedList(): List<VirtualFile> {
