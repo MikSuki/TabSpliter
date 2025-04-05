@@ -83,6 +83,10 @@ object TabManager {
     ) {
         val fileList = getActiveTabLastUsedList()
 
+        if(fileList.isEmpty()){
+            return
+        }
+
         if (!isSwitching) {
             if (!canInitSwitcher) {
                 return
