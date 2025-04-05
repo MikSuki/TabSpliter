@@ -31,63 +31,63 @@
     </projectListeners>
 
     <actions>
-        <action id="prepare_and_switch_tab_next" class="com.miksuki.tabspliter.event.PrepareAndSwitchTabNext"
+        <action id="prepare_and_switch_tab_next" text="Switch to next file" class="com.miksuki.tabspliter.event.PrepareAndSwitchTabNext"
         >
             <keyboard-shortcut first-keystroke="ctrl TAB"  keymap="$default"/>
         </action>
-        <action id="prepare_and_switch_tab_previous" class="com.miksuki.tabspliter.event.PrepareAndSwitchTabPrevious"
+        <action id="prepare_and_switch_tab_previous" text="Switch to previous file" class="com.miksuki.tabspliter.event.PrepareAndSwitchTabPrevious"
         >
             <keyboard-shortcut first-keystroke="ctrl shift TAB"  keymap="$default"/>
         </action>
-        <action id="switch_tab_next" class="com.miksuki.tabspliter.event.SwitchTabPrevios"
+        <action id="switch_tab_next" text="Switch to previous file(when switching)" class="com.miksuki.tabspliter.event.SwitchTabPrevios"
         >
             <keyboard-shortcut first-keystroke="ctrl UP"  keymap="$default"/>
         </action>
-        <action id="switch_tab_previous" class="com.miksuki.tabspliter.event.SwitchTabNext"
+        <action id="switch_tab_previous" text="Switch to next file(when switching)" class="com.miksuki.tabspliter.event.SwitchTabNext"
         >
             <keyboard-shortcut first-keystroke="ctrl DOWN"  keymap="$default"/>
         </action>
-        <action id="move_tab_right" class="com.miksuki.tabspliter.event.MoveFileRight"
+        <action id="move_tab_right" text="Move file right" class="com.miksuki.tabspliter.event.MoveFileRight"
         >
             <keyboard-shortcut first-keystroke="alt RIGHT"  keymap="$default"/>
         </action>
-        <action id="move_tab_left" class="com.miksuki.tabspliter.event.MoveFileLeft"
+        <action id="move_tab_left" text="Move file left" class="com.miksuki.tabspliter.event.MoveFileLeft"
         >
             <keyboard-shortcut first-keystroke="alt LEFT"  keymap="$default"/>
         </action>
-        <action id="move_to_1" class="com.miksuki.tabspliter.event.MoveToFisrtTab"
+        <action id="move_to_1" text="Select Tab 1" class="com.miksuki.tabspliter.event.MoveToFisrtTab"
             >
             <keyboard-shortcut first-keystroke="control 1"  keymap="$default"/>
         </action>
-        <action id="move_to_2" class="com.miksuki.tabspliter.event.MoveToSecondTab"
+        <action id="move_to_2" text="Select Tab 2" class="com.miksuki.tabspliter.event.MoveToSecondTab"
         >
             <keyboard-shortcut first-keystroke="control 2"  keymap="$default"/>
         </action>
-        <action id="move_to_3" class="com.miksuki.tabspliter.event.MoveToThirdTab"
+        <action id="move_to_3" text="Select Tab 3" class="com.miksuki.tabspliter.event.MoveToThirdTab"
         >
             <keyboard-shortcut first-keystroke="control 3"  keymap="$default"/>
         </action>
-        <action id="move_to_4" class="com.miksuki.tabspliter.event.MoveToFourthTab"
+        <action id="move_to_4" text="Select Tab 4" class="com.miksuki.tabspliter.event.MoveToFourthTab"
         >
             <keyboard-shortcut first-keystroke="control 4"  keymap="$default"/>
         </action>
-        <action id="move_to_5" class="com.miksuki.tabspliter.event.MoveToFifthTab"
+        <action id="move_to_5" text="Select Tab 5" class="com.miksuki.tabspliter.event.MoveToFifthTab"
         >
             <keyboard-shortcut first-keystroke="control 5"  keymap="$default"/>
         </action>
-        <action id="move_to_6" class="com.miksuki.tabspliter.event.MoveToSixthTab"
+        <action id="move_to_6" text="Select Tab 6" class="com.miksuki.tabspliter.event.MoveToSixthTab"
         >
             <keyboard-shortcut first-keystroke="control 6"  keymap="$default"/>
         </action>
-        <action id="move_to_7" class="com.miksuki.tabspliter.event.MoveToSeventhTab"
+        <action id="move_to_7" text="Select Tab 7" class="com.miksuki.tabspliter.event.MoveToSeventhTab"
         >
             <keyboard-shortcut first-keystroke="control 7"  keymap="$default"/>
         </action>
-        <action id="move_to_8" class="com.miksuki.tabspliter.event.MoveToEighthTab"
+        <action id="move_to_8" text="Select Tab 8" class="com.miksuki.tabspliter.event.MoveToEighthTab"
         >
             <keyboard-shortcut first-keystroke="control 8"  keymap="$default"/>
         </action>
-        <action id="move_to_9" class="com.miksuki.tabspliter.event.MoveToNinthTab"
+        <action id="move_to_9" text="Select Tab 9" class="com.miksuki.tabspliter.event.MoveToNinthTab"
         >
             <keyboard-shortcut first-keystroke="control 9"  keymap="$default"/>
         </action>
