@@ -23,6 +23,8 @@ object SwitcherList {
         panelHeight: Int,
         fontSize: Int,
     ): JBList<ListItem> {
+        val myFontSize = (fontSize * 1.2).toFloat()
+
         class CellListRenderer : DefaultListCellRenderer() {
             override fun getListCellRendererComponent(
                 list: JList<out Any>?,
@@ -33,6 +35,7 @@ object SwitcherList {
             ): Component {
                 icon = (value as ListItem).icon
                 text = value.text
+                font = font.deriveFont(myFontSize)
                 border =
                     BorderFactory.createEmptyBorder(
                         (panelHeight * 0.05).toInt(),
@@ -73,8 +76,7 @@ object SwitcherList {
             JBList(listModel).apply {
                 preferredSize.width = panelWidth
                 selectionMode = ListSelectionModel.SINGLE_SELECTION
-                font = font.deriveFont(fontSize)
-                fixedCellHeight = fontSize * 2
+                fixedCellHeight = (myFontSize * 2).toInt()
                 cellRenderer = CellListRenderer()
                 addMouseListener(
                     object : MouseAdapter() {
