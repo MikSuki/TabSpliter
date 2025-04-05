@@ -1,6 +1,6 @@
 package com.miksuki.tabspliter.event
 
-import com.miksuki.tabspliter.TabManager
+import com.miksuki.tabspliter.service.TabManager
 import java.awt.AWTEvent
 import java.awt.Toolkit
 import java.awt.event.KeyEvent

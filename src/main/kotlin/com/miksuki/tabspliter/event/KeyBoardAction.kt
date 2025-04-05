@@ -2,7 +2,7 @@ package com.miksuki.tabspliter.event
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.miksuki.tabspliter.TabManager
+import com.miksuki.tabspliter.service.TabManager
 import com.miksuki.tabspliter.type.Direction
 
 class PrepareAndSwitchTabNext : AnAction() {

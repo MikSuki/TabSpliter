@@ -2,7 +2,7 @@ package com.miksuki.tabspliter.ui
 
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.components.JBList
-import com.miksuki.tabspliter.TabManager
+import com.miksuki.tabspliter.service.TabManager
 import com.miksuki.tabspliter.utils.Utils
 import java.awt.Component
 import java.awt.event.MouseAdapter

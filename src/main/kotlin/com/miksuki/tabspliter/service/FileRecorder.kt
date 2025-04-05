@@ -1,4 +1,4 @@
-package com.miksuki.tabspliter
+package com.miksuki.tabspliter.service
 
 import com.intellij.openapi.vfs.VirtualFile
 

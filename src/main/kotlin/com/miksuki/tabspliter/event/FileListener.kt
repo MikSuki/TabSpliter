@@ -4,8 +4,8 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.vfs.VirtualFile
-import com.miksuki.tabspliter.FileRecorder
-import com.miksuki.tabspliter.TabManager
+import com.miksuki.tabspliter.service.FileRecorder
+import com.miksuki.tabspliter.service.TabManager
 
 class FileListener : FileEditorManagerListener {
     override fun selectionChanged(event: FileEditorManagerEvent) {

@@ -1,4 +1,4 @@
-package com.miksuki.tabspliter
+package com.miksuki.tabspliter.service
 
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.application.ApplicationManager
@@ -24,7 +24,7 @@ object TabManager {
 
     fun init(project: Project) {
         isInit = true
-        this.fileEditorManagerEx = FileEditorManagerEx.getInstanceEx(project)
+        fileEditorManagerEx = FileEditorManagerEx.getInstanceEx(project)
     }
 
     private fun initSwitchingTab(size: Int) {
