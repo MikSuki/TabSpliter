@@ -15,7 +15,6 @@ import com.miksuki.tabspliter.utils.Utils
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Point
-import java.awt.Toolkit
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.*
@@ -53,6 +52,7 @@ object TabSwitcherPopup {
     private var panelHeight: Int = 300
     private var panelPosX: Int = 0
     private var panelPosY: Int = 0
+    private var fontSize: Int = 20
     private var panelPadding: Int = 0
     private lateinit var list: JBList<ListItem>
 
@@ -94,8 +94,8 @@ object TabSwitcherPopup {
             JBList(listModel).apply {
                 preferredSize.width = panelWidth
                 selectionMode = ListSelectionModel.SINGLE_SELECTION
-                font = font.deriveFont(20f)
-                fixedCellHeight = 40
+                font = font.deriveFont(fontSize)
+                fixedCellHeight = fontSize * 2
                 cellRenderer = CellListRenderer()
                 addMouseListener(
                     object : MouseAdapter() {
@@ -158,6 +158,7 @@ object TabSwitcherPopup {
         panelPosX = (appSize.width - panelWidth) / 2
         panelPosY = 0
         panelPadding = (panelWidth * 0.05).toInt()
+        fontSize = Utils.getFontSize()
 
         popup = createPopup(files)
         popup.show(RelativePoint(Point(panelPosX, panelPosY)))

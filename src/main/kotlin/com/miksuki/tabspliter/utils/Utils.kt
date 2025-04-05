@@ -1,5 +1,6 @@
 package com.miksuki.tabspliter.utils
 
+import com.intellij.ide.ui.UISettings
 import com.intellij.openapi.wm.WindowManager
 import java.awt.Dimension
 import java.awt.Toolkit
@@ -17,4 +18,6 @@ object Utils {
                 ?: Toolkit.getDefaultToolkit().screenSize
         return size
     }
+
+    fun getFontSize() = UISettings.getInstance().fontSize
 }
