@@ -4,6 +4,7 @@
 ## What's HighlightCursor?
 
 This is an IntelliJ extension that allows you to horizontally split the editor.
+
 While there are already several extensions that offer this feature, I found some of them a bit inconvenient, so I made it.
 
 ## What Makes It Different
