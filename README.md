@@ -35,7 +35,4 @@ While there are already several extensions that offer this feature, I found some
 | Select Tab 8                            | Ctrl + 8           |
 | Select Tab 9                            | Ctrl + 9           |
 
-
-
-
 <!-- Plugin description end -->
