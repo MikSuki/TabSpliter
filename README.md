@@ -26,6 +26,7 @@ While there are already several extensions that offer this feature, I found some
 | Switch to previous file                 | Ctrl + Shift + Tab |
 | Switch to next file(when switching)     | Ctrl + Down        |
 | Switch to previous file(when switching) | Ctrl + Up          |
+| Toggle Current Tab Size                 | Alt + T            |
 | Select Tab 1                            | Ctrl + 1           |
 | Select Tab 2                            | Ctrl + 2           |
 | Select Tab 3                            | Ctrl + 3           |
