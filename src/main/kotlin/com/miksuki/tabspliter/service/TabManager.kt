@@ -57,7 +57,7 @@ object TabManager {
     }
 
     fun selectTab(index: Int) {
-        if (fileEditorManagerEx.windows.size in 1..fileEditorManagerEx.windows.size) {
+        if (index + 1 in 1..fileEditorManagerEx.windows.size) {
             val sortedWindows = getSortedWindows()
             val targetWindow = sortedWindows[index]
             if (fileEditorManagerEx.currentWindow == targetWindow) {
