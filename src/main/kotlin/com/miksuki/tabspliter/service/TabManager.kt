@@ -134,6 +134,8 @@ class TabManager(
         val posInWindows = sortedWindows.indexOf(currentWindow)
         val isRightMost = posInWindows == sortedWindows.size - 1
 
+        focusNextFileInCurrentWindow()
+
         when (true) {
             isRightMost -> {
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
@@ -145,7 +147,6 @@ class TabManager(
             else -> {
                 val targetPos = posInWindows + 1
                 val targetWindow = sortedWindows[targetPos]
-                val filePath = currentFile.url
 
                 val focusTargetEditor: () -> Unit = {
                     ApplicationManager.getApplication().invokeLater {
@@ -161,12 +162,20 @@ class TabManager(
         }
     }
 
+    private fun focusNextFileInCurrentWindow(){
+        val nextFile = getActiveTabLastUsedList().getOrNull(1) ?: return
+
+        fileEditorManagerEx.openFile(nextFile)
+    }
+
     fun moveFileLeft() {
         val currentFile = fileEditorManagerEx.currentFile ?: return
         val currentWindow = fileEditorManagerEx.currentWindow ?: return
         val sortedWindows = getSortedWindows()
         val posInWindows = sortedWindows.indexOf(currentWindow)
         val isLeftMost = posInWindows == 0
+
+        focusNextFileInCurrentWindow()
 
         when (true) {
             isLeftMost -> {
