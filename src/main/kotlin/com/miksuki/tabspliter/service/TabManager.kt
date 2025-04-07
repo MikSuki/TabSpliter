@@ -2,6 +2,7 @@ package com.miksuki.tabspliter.service
 
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.components.Service
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.fileEditor.impl.EditorWindow
 import com.intellij.openapi.project.Project
@@ -14,16 +15,23 @@ import java.awt.Point
 import javax.swing.JSplitPane
 import javax.swing.SwingUtilities
 
-object TabManager {
-    private lateinit var fileEditorManagerEx: FileEditorManagerEx
+@Service(Service.Level.PROJECT)
+class TabManager(
+    project: Project,
+) {
+    private val tabSwitcherPopup: TabSwitcherPopup
+    private val fileEditorManagerEx: FileEditorManagerEx
+    private val utils: Utils
     private var switchingPos = CyclicCounter(0)
     private var isSwitching = false
     private val tabNeedFocusAfterFileClosed: HashMap<String, () -> Unit> = HashMap()
 
     var isInit = false
 
-    fun init(project: Project) {
+    init {
         isInit = true
+        tabSwitcherPopup = project.getService(TabSwitcherPopup::class.java)
+        utils = Utils(project)
         fileEditorManagerEx = FileEditorManagerEx.getInstanceEx(project)
     }
 
@@ -31,7 +39,7 @@ object TabManager {
         val fileList = getActiveTabLastUsedList()
         switchingPos = CyclicCounter(size)
         isSwitching = true
-        TabSwitcherPopup.show(fileList)
+        tabSwitcherPopup.show(fileList)
     }
 
     fun stopSwitchingTab() {
@@ -39,7 +47,7 @@ object TabManager {
             return
         }
 
-        TabSwitcherPopup.close()
+        tabSwitcherPopup.close()
         isSwitching = false
     }
 
@@ -52,7 +60,7 @@ object TabManager {
         val currentWindow = fileEditorManagerEx.currentWindow
         fileEditorManagerEx.openFile(fileList[pos])
         fileEditorManagerEx.currentWindow = currentWindow
-        TabSwitcherPopup.close()
+        tabSwitcherPopup.close()
         isSwitching = false
     }
 
@@ -64,7 +72,7 @@ object TabManager {
                 return
             }
             targetWindow.setAsCurrentWindow(true)
-            val appWidth = Utils.getAppSize().width
+            val appWidth = utils.getAppSize().width
             val needMaximize =
                 sortedWindows
                     .map { it.tabbedPane.component.width }
@@ -83,7 +91,7 @@ object TabManager {
     ) {
         val fileList = getActiveTabLastUsedList()
 
-        if(fileList.isEmpty()){
+        if (fileList.isEmpty()) {
             return
         }
 
@@ -99,11 +107,11 @@ object TabManager {
             Direction.PREVIOUS -> switchingPos.sub()
         }
 
-        TabSwitcherPopup.setSelectedItem(switchingPos.get())
+        tabSwitcherPopup.setSelectedItem(switchingPos.get())
     }
 
     private fun getActiveTabLastUsedList(): List<VirtualFile> {
-        val fileList = fileEditorManagerEx.splitters.currentWindow?.fileList ?: listOf()
+        val fileList = fileEditorManagerEx.currentWindow?.fileList ?: listOf()
         return fileList
             .map { it to FileRecorder.getLastUsedTime(it) }
             .sortedByDescending { it.second }

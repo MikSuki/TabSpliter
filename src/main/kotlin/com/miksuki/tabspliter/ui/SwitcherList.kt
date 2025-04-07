@@ -1,5 +1,7 @@
 package com.miksuki.tabspliter.ui
 
+import com.intellij.openapi.components.Service
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.components.JBList
 import com.miksuki.tabspliter.service.TabManager
@@ -9,7 +11,10 @@ import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.*
 
-object SwitcherList {
+@Service(Service.Level.PROJECT)
+class SwitcherList(
+    private val project: Project,
+) {
     class ListItem(
         val icon: Icon,
         val text: String,
@@ -55,6 +60,8 @@ object SwitcherList {
                 .filter { it.value.size > 1 }
                 .map { it.key }
                 .toSet()
+        val utils = project.getService(Utils::class.java)
+        val tabManager = project.getService(TabManager::class.java)
 
         listModel.addAll(
             files.map {
@@ -62,7 +69,7 @@ object SwitcherList {
                     it.fileType.icon,
                     if (filesNeedShowPath.contains(it.name)) {
                         it.url.let { url ->
-                            val projectUrl = Utils.getProjectPath() ?: url
+                            val projectUrl = utils.getProjectPath() ?: url
                             val index = url.indexOf(projectUrl)
                             url.substring(index + projectUrl.length)
                         }
@@ -83,7 +90,7 @@ object SwitcherList {
                         override fun mouseClicked(e: MouseEvent) {
                             val index = list.locationToIndex(e.point)
                             if (index >= 0) {
-                                TabManager.finishSwitchingTab(index)
+                                tabManager.finishSwitchingTab(index)
                             }
                         }
 

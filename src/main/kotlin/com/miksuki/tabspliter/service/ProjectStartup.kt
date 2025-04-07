@@ -5,19 +5,20 @@ import com.intellij.openapi.startup.ProjectActivity
 import com.miksuki.tabspliter.event.AppSwitchDetector
 import com.miksuki.tabspliter.event.AppSwitchListener
 import com.miksuki.tabspliter.event.GlobalKeyBoardListener
-import com.miksuki.tabspliter.utils.GlobalVariable
 
 class ProjectStartup :
     ProjectActivity,
     AppSwitchListener {
+    lateinit var project: Project
+
     override suspend fun execute(project: Project) {
-        GlobalVariable.project = project
-        TabManager.init(project)
-        GlobalKeyBoardListener.register()
+        this.project = project
+        GlobalKeyBoardListener.register(project)
         AppSwitchDetector.initListener(this)
     }
 
     override fun onIdeDeactivated() {
-        TabManager.stopSwitchingTab()
+        val tabManager = project.getService(TabManager::class.java)
+        tabManager.stopSwitchingTab()
     }
 }

@@ -1,6 +1,8 @@
 package com.miksuki.tabspliter.ui
 
 import com.intellij.icons.AllIcons
+import com.intellij.openapi.components.Service
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.popup.JBPopup
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.vfs.VirtualFile
@@ -14,7 +16,10 @@ import java.awt.BorderLayout
 import java.awt.Point
 import javax.swing.*
 
-object TabSwitcherPopup {
+@Service(Service.Level.PROJECT)
+class TabSwitcherPopup(
+    private val project: Project,
+) {
     private lateinit var popup: JBPopup
     private var panelWidth: Int = 500
     private var panelHeight: Int = 300
@@ -33,7 +38,7 @@ object TabSwitcherPopup {
                 }
             }
 
-        list = SwitcherList.create(files, panelWidth, panelHeight, fontSize)
+        list = project.getService(SwitcherList::class.java).create(files, panelWidth, panelHeight, fontSize)
 
         val scrollPane =
             JBScrollPane(list).apply {
@@ -74,13 +79,14 @@ object TabSwitcherPopup {
     }
 
     fun show(files: List<VirtualFile>) {
-        val appSize = Utils.getAppSize()
+        val utils = project.getService(Utils::class.java)
+        val appSize = utils.getAppSize()
         panelWidth = (appSize.width * 0.3).toInt()
         panelHeight = (appSize.height * 0.3).toInt()
         panelPosX = (appSize.width - panelWidth) / 2
         panelPosY = 0
         panelPadding = (panelWidth * 0.05).toInt()
-        fontSize = Utils.getFontSize()
+        fontSize = utils.getFontSize()
 
         popup = createPopup(files)
         popup.show(RelativePoint(Point(panelPosX, panelPosY)))
