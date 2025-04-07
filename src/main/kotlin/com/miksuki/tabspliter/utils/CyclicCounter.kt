@@ -17,7 +17,7 @@ class CyclicCounter(
 
     fun sub() {
         if (--current < 0) {
-            current = max - 1
+            current = max
         }
     }
 }
