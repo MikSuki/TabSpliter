@@ -9,16 +9,17 @@ import com.miksuki.tabspliter.event.GlobalKeyBoardListener
 class ProjectStartup :
     ProjectActivity,
     AppSwitchListener {
-    lateinit var project: Project
+    var project: Project? = null
 
     override suspend fun execute(project: Project) {
         this.project = project
-        GlobalKeyBoardListener.register(project)
+        GlobalKeyBoardListener.register()
         AppSwitchDetector.initListener(this)
     }
 
     override fun onIdeDeactivated() {
-        val tabManager = project.getService(TabManager::class.java)
-        tabManager.stopSwitchingTab()
+        if (this.project == null) return
+        val tabManager = project?.getService(TabManager::class.java)
+        tabManager?.stopSwitchingTab()
     }
 }

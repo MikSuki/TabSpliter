@@ -9,6 +9,7 @@ class PrepareAndSwitchTabNext : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val tabManager = e.project?.getService(TabManager::class.java) ?: return
         tabManager.switchActiveTabFile(Direction.NEXT, true)
+        GlobalKeyBoardListener.setCurrentProject(e.project!!)
     }
 }
 
@@ -16,6 +17,7 @@ class PrepareAndSwitchTabPrevious : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val tabManager = e.project?.getService(TabManager::class.java) ?: return
         tabManager.switchActiveTabFile(Direction.PREVIOUS, true)
+        GlobalKeyBoardListener.setCurrentProject(e.project!!)
     }
 }
 
