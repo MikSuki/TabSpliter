@@ -16,7 +16,7 @@ While there are already several extensions that offer this feature, I found some
 
 ## Hotkeys
 
-> Some hotkeys may conflict with your default IntelliJ keymap, so you might need to customize them.
+> Some hotkeys may conflict with your default keymap, so you might need to customize them.
 
 | Action                                  | Shortcut           |
 |-----------------------------------------|--------------------|
