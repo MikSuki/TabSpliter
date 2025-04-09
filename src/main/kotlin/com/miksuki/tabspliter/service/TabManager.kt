@@ -141,7 +141,10 @@ class TabManager(
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
                     currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, true, true)
                         ?: throw Exception("move file left error :(")
-                    fileEditorManagerEx.closeFile(currentFile, currentWindow)
+
+                    ApplicationManager.getApplication().invokeLater {
+                        fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                    }
                 }
             }
             else -> {
@@ -157,12 +160,14 @@ class TabManager(
                 }
                 tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
 
-                fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                ApplicationManager.getApplication().invokeLater {
+                    fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                }
             }
         }
     }
 
-    private fun focusNextFileInCurrentWindow(){
+    private fun focusNextFileInCurrentWindow() {
         val nextFile = getActiveTabLastUsedList().getOrNull(1) ?: return
 
         fileEditorManagerEx.openFile(nextFile)
@@ -182,7 +187,10 @@ class TabManager(
                 if (currentWindow.fileList.size > 1 /* otherwise, it will no need to move*/) {
                     currentWindow.split(JSplitPane.HORIZONTAL_SPLIT, true, currentFile, true, false)
                         ?: throw Exception("move file left error :(")
-                    fileEditorManagerEx.closeFile(currentFile, currentWindow)
+
+                    ApplicationManager.getApplication().invokeLater {
+                        fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                    }
                 }
             }
             else -> {
@@ -195,8 +203,11 @@ class TabManager(
                     }
                 }
                 tabNeedFocusAfterFileClosed[currentFile.url] = focusTargetEditor
-                fileEditorManagerEx.closeFile(currentFile, currentWindow)
-                targetWindow.setAsCurrentWindow(true)
+
+                ApplicationManager.getApplication().invokeLater {
+                    fileEditorManagerEx.closeFile(currentFile, currentWindow)
+                    targetWindow.setAsCurrentWindow(true)
+                }
             }
         }
     }
