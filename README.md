@@ -7,6 +7,8 @@ This is an IntelliJ extension that allows you to horizontally split the editor.
 
 While there are already several extensions that offer this feature, I found some of them a bit inconvenient, so I made it.
 
+[View this plugin on JetBrains Plugin Store](https://plugins.jetbrains.com/plugin/26990-tabsplitter)
+ 
 ## What Makes It Different
 
 - Implements a tab switcher that only switches files within the current editor window.
