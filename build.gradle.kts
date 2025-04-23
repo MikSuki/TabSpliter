@@ -32,7 +32,6 @@ dependencies {
 
             patchPluginXml {
                 sinceBuild.set("242.1")
-                untilBuild.set("243.*")
 
                 pluginDescription =
                     providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
