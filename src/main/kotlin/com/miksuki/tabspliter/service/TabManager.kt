@@ -71,7 +71,11 @@ class TabManager(
             if (fileEditorManagerEx.currentWindow == targetWindow) {
                 return
             }
-            targetWindow.setAsCurrentWindow(true)
+
+            ApplicationManager.getApplication().invokeLater {
+                targetWindow.setAsCurrentWindow(true)
+            }
+
             val appWidth = utils.getAppSize().width
             val needMaximize =
                 sortedWindows
